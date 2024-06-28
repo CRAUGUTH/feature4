@@ -4,8 +4,10 @@
 # Push 2 (Conner):*
 
 Started implimenting Student B's code including:
-- Creating folder structure
-- Setting up the routing network
-- 
+- Created folder structure
+- Set up the routing network
+- Configured webpack
+- Updated database
+- Began working on components
 
 # Push 3 ():
