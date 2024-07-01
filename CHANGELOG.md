@@ -13,4 +13,5 @@ Started implimenting Student B's code including:
 # Push 3 (Michael):
 
 Implemented proper viewing of title and description in lecture list
--Ensured add lesson added to database
+- Ensured add lesson added to database
+
