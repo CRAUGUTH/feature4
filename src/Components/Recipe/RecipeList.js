@@ -57,6 +57,14 @@ const RecipeList = () => {
                                             <li>Fat: {recipe.attributes.fat}</li>
                                             <li>Carbs: {recipe.attributes.carbs}</li>
                                         </ul>
+                                        <br></br>
+                                        <h5>Main Ingredients:</h5>
+                                        <ul>
+                                            {/* UML one to many [array] */}
+                                            {recipe.attributes.Ingredients.map((ingredient, index) => (
+                                                <li key={index}>{ingredient}</li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </li>
                             ))}
