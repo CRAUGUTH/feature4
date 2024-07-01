@@ -23,5 +23,5 @@ Switched back to original concept (recipes)
 
 Added UML relationship (one to many) called ingredients. 
 
-Since it contains <10 items we are using arrays not pointers
+Since it contains less than 10 items we are using arrays not pointers
 
