@@ -15,3 +15,6 @@ Started implimenting Student B's code including:
 Implemented proper viewing of title and description in lecture list
 - Ensured add lesson added to database
 
+# Push 4 (Conner):
+
+Switched back to original concept (recipes)
