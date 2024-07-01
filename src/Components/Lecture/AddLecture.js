@@ -9,6 +9,8 @@ const AddLecture = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await addLecture(title, description);
+        setTitle('');
+        setDescription('');
     };
 
     return (

@@ -5,6 +5,7 @@ export const fetchLectures = async () => {
     const Lecture = Parse.Object.extend('Lesson');
     const query = new Parse.Query(Lecture);
     return query.find().then((results) => {
+        console.log(results)
         return results;
     });
 };

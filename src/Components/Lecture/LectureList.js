@@ -18,7 +18,12 @@ const LectureList = () => {
             {lectures.length > 0 && (
                     <ul>
                         {lectures.map((lecture) => (
-                            <li key={lecture.id}>{lecture.id}</li>
+                            <li key={lecture.id}>
+                            <div>
+                                <h3>Title: {lecture.attributes.title}</h3>
+                                <h4>Description: {lecture.attributes.description}</h4>
+                            </div>
+                        </li>
                         ))}
                     </ul>
                 )}
