@@ -25,3 +25,8 @@ Added UML relationship (one to many) called ingredients.
 
 Since it contains less than 10 items we are using arrays not pointers
 
+# Push 6 (Michael):
+
+Added auth login and register
+
+
