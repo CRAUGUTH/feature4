@@ -1,17 +1,25 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { fetchRecipes } from '../../Services/RecipeService';
 import { Link } from 'react-router-dom';
-import './styles.css'; // Assuming your CSS file is named styles.css and in the same directory
+import { getUser } from '../../Services/Auth/AuthService';
+import './styles.css';
 
 // RecipeList Component
 const RecipeList = () => {
     const [recipes, setRecipes] = useState([]);
 
     useLayoutEffect(() => {
-        fetchRecipes('Conner').then((recipes) => { // Pass 'Conner' as the user identifier
-            console.log('Recipes: ', recipes);
-            setRecipes(recipes);
-        });
+        async function fetchUserRecipes() {
+            try {
+                const currentUser = getUser();
+                const fetchedRecipes = await fetchRecipes(currentUser);
+                setRecipes(fetchedRecipes);
+            } catch (error) {
+                console.error('Error fetching recipes:', error);
+            }
+        }
+
+        fetchUserRecipes();
     }, []);
 
     return (
@@ -45,7 +53,7 @@ const RecipeList = () => {
                 </header>
                 <main className="container">
                     {/* General Information */}
-                    {recipes.length > 0 && (
+                    {recipes.length > 0 ? (
                         <ul className="list-unstyled">
                             {recipes.map((recipe) => (
                                 <li key={recipe.id} className="recipe-box">
@@ -60,8 +68,8 @@ const RecipeList = () => {
                                         <br></br>
                                         <h5>Main Ingredients:</h5>
                                         <ul>
-                                            {/* UML one to many [array] */}
-                                            {recipe.attributes.Ingredients.map((ingredient, index) => (
+                                            {/* Ensure ingredients is properly handled */}
+                                            {recipe.attributes.ingredients.map((ingredient, index) => (
                                                 <li key={index}>{ingredient}</li>
                                             ))}
                                         </ul>
@@ -69,6 +77,8 @@ const RecipeList = () => {
                                 </li>
                             ))}
                         </ul>
+                    ) : (
+                        <p>No recipes found.</p>
                     )}
                 </main>
                 {/* Links to Socials */}

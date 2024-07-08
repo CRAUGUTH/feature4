@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { loginUser } from "./AuthService";
 import LoginForm from "./LoginForm";
+import { useNavigate } from 'react-router-dom';
 
 const AuthLogin = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const onChangeHandler = (e) => {
@@ -18,7 +20,7 @@ const AuthLogin = () => {
     e.preventDefault();
     loginUser(user).then((loggedInUser) => {
       if (loggedInUser) {
-        alert(`Welcome back, ${loggedInUser.get("firstName")}!`);
+        navigate('/');
       } else {
         alert("Login failed. Please check your credentials.");
       }

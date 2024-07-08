@@ -8,15 +8,42 @@ const AddRecipe = () => {
     const [protein, setProtein] = useState('');
     const [fat, setFat] = useState('');
     const [carbs, setCarbs] = useState('');
+    const [ingredients, setIngredients] = useState([]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await addRecipe({ name, calories, protein, fat, carbs, user: 'Conner' }); // Pass 'Conner' as the user identifier
-        setName('');
-        setCalories('');
-        setProtein('');
-        setFat('');
-        setCarbs('');
+        try {
+            await addRecipe({ name, calories, protein, fat, carbs, ingredients });
+            console.log('Recipe added successfully!');
+            setName('');
+            setCalories('');
+            setProtein('');
+            setFat('');
+            setCarbs('');
+            setIngredients([]);
+        } catch (error) {
+            console.error('Error adding recipe:', error);
+        }
+    };
+
+    const handleAddIngredient = () => {
+        if (ingredients.length < 10) { // Limiting to 10 ingredients
+            setIngredients([...ingredients, '']);
+        } else {
+            alert('Maximum number of ingredients reached.');
+        }
+    };
+
+    const handleIngredientChange = (index, value) => {
+        const updatedIngredients = [...ingredients];
+        updatedIngredients[index] = value;
+        setIngredients(updatedIngredients);
+    };
+
+    const handleRemoveIngredient = (index) => {
+        const updatedIngredients = [...ingredients];
+        updatedIngredients.splice(index, 1);
+        setIngredients(updatedIngredients);
     };
 
     return (
@@ -101,6 +128,26 @@ const AddRecipe = () => {
                                 onChange={(e) => setCarbs(e.target.value)}
                                 required
                             />
+                        </div>
+                        <div className="form-group">
+                            <label>Ingredients:</label>
+                            {ingredients.map((ingredient, index) => (
+                                <div key={index} className="ingredient-input row align-items-center">
+                                    <div className="col">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={ingredient}
+                                            onChange={(e) => handleIngredientChange(index, e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-auto">
+                                        <button type="button" onClick={() => handleRemoveIngredient(index)} className="btn btn-danger">Remove</button>
+                                    </div>
+                                </div>
+                            ))}
+                            <button type="button" onClick={handleAddIngredient} className="btn btn-primary mt-2">Add Ingredient</button>
                         </div>
                         <button type="submit" className="btn btn-primary mt-3">Add Recipe</button>
                     </form>

@@ -34,3 +34,13 @@ export const loginUser = async (user) => {
       return null;
     }
   };
+
+export const getUser = () => {
+  const currentUser = Parse.User.current();
+  if (currentUser) {
+    return currentUser;
+  } else {
+    throw new Error('No user logged in');
+  }
+};
+  

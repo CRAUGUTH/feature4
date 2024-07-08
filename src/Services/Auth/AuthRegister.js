@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createUser } from "./AuthService";
 import AuthForm from "./AuthForm";
+import { useNavigate } from 'react-router-dom';
 
 const AuthRegister = () => {
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -10,33 +12,27 @@ const AuthRegister = () => {
     password: "",
   });
 
-  // flag is the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
-          alert(
-            `${userCreated.get("firstName")}, you successfully registered!`
-          );
+          navigate('/');
         }
         setAdd(false);
       });
     }
-  }, [newUser, add]);
+  }, [newUser, add, navigate]); // Add navigate to the dependency array
 
   const onChangeHandler = (e) => {
     e.preventDefault();
-    console.log(e.target);
-    const { name, value: newValue } = e.target;
-    console.log(newValue);
-    setNewUser({ ...newUser, [name]: newValue });
+    const { name, value } = e.target;
+    setNewUser({ ...newUser, [name]: value });
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submitted: ", e.target);
     setAdd(true);
   };
 
