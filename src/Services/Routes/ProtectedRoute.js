@@ -9,7 +9,7 @@ const ProtectedRoute = ({ element: Element, authRequired }) => {
         const currentUser = Parse.User.current();
         if (authRequired && !currentUser) {
             alert('You need to be logged in to view this page.');
-            navigate('/');
+            navigate('/login');
         } else if (!authRequired && currentUser) {
             alert('You are already logged in!');
             navigate('/');
