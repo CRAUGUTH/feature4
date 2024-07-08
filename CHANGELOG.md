@@ -27,6 +27,6 @@ Since it contains less than 10 items we are using arrays not pointers
 
 # Push 6 (Michael):
 
-Added auth login and register
+Added auth login and register, also added an alert that does not let you go to login or register if an account is logged in
 
 
