@@ -24,7 +24,7 @@ const AuthRegister = () => {
         setAdd(false);
       });
     }
-  }, [newUser, add, navigate]); // Add navigate to the dependency array
+  }, [newUser, add, navigate]);
 
   const onChangeHandler = (e) => {
     e.preventDefault();
