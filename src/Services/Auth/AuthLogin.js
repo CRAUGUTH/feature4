@@ -21,6 +21,7 @@ const AuthLogin = () => {
     loginUser(user).then((loggedInUser) => {
       if (loggedInUser) {
         navigate('/');
+        window.location.reload();
       } else {
         alert("Login failed. Please check your credentials.");
       }

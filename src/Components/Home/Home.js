@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Parse from 'parse';
 
-export default function Home() {
+const logout = () => {
+  Parse.User.logOut().then(() => {
+    window.location.reload();
+  });
+};
+
+export default function Home({ currentUser }) {
   return (
     <html lang="en">
       <head>
@@ -28,12 +35,20 @@ export default function Home() {
               <li className="nav-item">
                 <Link className="nav-link" to="/list">All Recipes</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">Register</Link>
-              </li>
+              {currentUser ? (
+                <li className="nav-item">
+                  <button className="nav-link" onClick={logout}>Logout</button>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Login</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">Register</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </header>
@@ -51,8 +66,8 @@ export default function Home() {
           </div>
           <h2>What is Recipes?</h2>
           <p>Recipes is a webpage that allows you to not only store your favorite
-            recipes for future referance but allows you to also store each
-            recipes corresponding macro nutrients to help you achive yoru health
+            recipes for future reference but allows you to also store each
+            recipe's corresponding macro nutrients to help you achieve your health
             goals!</p>
         </main>
         {/* Links to Socials */}

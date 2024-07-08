@@ -19,6 +19,7 @@ const AuthRegister = () => {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
           navigate('/');
+          window.location.reload();
         }
         setAdd(false);
       });
