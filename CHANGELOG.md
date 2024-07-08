@@ -29,4 +29,10 @@ Since it contains less than 10 items we are using arrays not pointers
 
 Added auth login and register, also added an alert that does not let you go to login or register if an account is logged in
 
+# Push 7 (Conner):
 
+Linked each user to there respective recipes
+
+# Push 8 (Conner):
+
+Added logout feature
