@@ -26,6 +26,31 @@ export const fetchRecipes = async (user) => {
     }
 };
 
+export const LiveRecipes = async (user) => {
+    const Recipe = Parse.Object.extend('Recipe');
+    const query = new Parse.Query(Recipe);
+
+    //query.equalTo('user', user);
+
+    try {
+        const results = await query.find();
+        return results.map(result => ({
+            id: result.id,
+            attributes: {
+                name: result.get('name'),
+                calories: result.get('calories'),
+                protein: result.get('protein'),
+                fat: result.get('fat'),
+                carbs: result.get('carbs'),
+                ingredients: result.get('Ingredients') || []
+            }
+        }));
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+        throw error;
+    }
+};
+
 // Add a new recipe for the current user
 export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredients }) => {
     const Recipe = Parse.Object.extend('Recipe');

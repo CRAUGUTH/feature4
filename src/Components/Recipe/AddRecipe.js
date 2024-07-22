@@ -72,6 +72,9 @@ const AddRecipe = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/list">All Recipes</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/liveList">Live Recipe List</Link>
+                            </li>
                         </ul>
                     </nav>
                 </header>

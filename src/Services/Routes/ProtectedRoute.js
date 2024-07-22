@@ -13,7 +13,7 @@ const ProtectedRoute = ({ element: Element, authRequired }) => {
         } else if (!authRequired && currentUser) {
             alert('You are already logged in!');
             navigate('/');
-        }
+        }   
     }, [navigate, authRequired]);
 
     return <Element />;

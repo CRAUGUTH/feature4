@@ -35,6 +35,9 @@ export default function Home({ currentUser }) {
               <li className="nav-item">
                 <Link className="nav-link" to="/list">All Recipes</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/list">Live Recipe List</Link>
+              </li>
               {currentUser ? (
                 <li className="nav-item">
                   <button className="nav-link" onClick={logout}>Logout</button>
