@@ -36,3 +36,7 @@ Linked each user to there respective recipes
 # Push 8 (Conner):
 
 Added logout feature
+
+# Push 9 (Michael):
+
+Added live query
