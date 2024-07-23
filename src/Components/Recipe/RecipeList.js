@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import { getUser } from '../../Services/Auth/AuthService';
 import './styles.css';
 
+// Function to calculate calories from macronutrients
+const calculateCalories = (protein, carbs, fat) => {
+    return (protein * 4) + (carbs * 4) + (fat * 9);
+};
+
 // RecipeList Component
 const RecipeList = () => {
     const [recipes, setRecipes] = useState([]);
@@ -13,7 +18,15 @@ const RecipeList = () => {
             try {
                 const currentUser = getUser();
                 const fetchedRecipes = await fetchRecipes(currentUser);
-                setRecipes(fetchedRecipes);
+                
+                // Calculate calories for each recipe
+                const recipesWithCalories = fetchedRecipes.map(recipe => {
+                    const { protein, carbs, fat } = recipe.attributes;
+                    const calories = calculateCalories(protein, carbs, fat);
+                    return { ...recipe, attributes: { ...recipe.attributes, calories } };
+                });
+
+                setRecipes(recipesWithCalories);
             } catch (error) {
                 console.error('Error fetching recipes:', error);
             }
