@@ -74,3 +74,25 @@ export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredien
         throw error;
     }
 };
+
+// Update an existing recipe
+export const updateRecipe = async ({ id, name, calories, protein, fat, carbs, ingredients }) => {
+    const Recipe = Parse.Object.extend('Recipe');
+    const query = new Parse.Query(Recipe);
+
+    try {
+        const recipe = await query.get(id);
+        recipe.set('name', name);
+        recipe.set('calories', parseFloat(calories));
+        recipe.set('protein', parseFloat(protein));
+        recipe.set('fat', parseFloat(fat));
+        recipe.set('carbs', parseFloat(carbs));
+        recipe.set('Ingredients', ingredients);
+
+        await recipe.save();
+        console.log('Recipe updated:', { id, name, calories, protein, fat, carbs, ingredients });
+    } catch (error) {
+        console.error('Error updating recipe:', error);
+        throw error;
+    }
+};

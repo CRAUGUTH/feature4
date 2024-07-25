@@ -64,8 +64,24 @@ nav ul li a:hover {
 /* Additional styling for header and footer */
 header {
   color: #000;
-  background-color: #dc3431;
   padding: 20px 0;
+}
+
+/* Specific header styles */
+.header-1 {
+  background-color: #dc3431; /* Red */
+}
+
+.header-2 {
+  background-color: #196dc1; /* Blue */
+}
+
+.header-3 {
+  background-color: #20b120; /* Green */
+}
+
+.header-4 {
+  background-color: #e79907; /* Orange */
 }
 
 footer {

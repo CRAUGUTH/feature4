@@ -47,7 +47,7 @@ const RecipeList = () => {
                 <link href="styles.css" rel="stylesheet" />
             </head>
             <body>
-                <header className="text-center mb-4">
+                <header className="header-2 text-center mb-4">
                     <h1 className="mb-4">Saved Recipes</h1>
                     {/* Internal Links */}
                     <nav>
@@ -81,7 +81,7 @@ const RecipeList = () => {
                                             <li>Fat: {recipe.attributes.fat}</li>
                                             <li>Carbs: {recipe.attributes.carbs}</li>
                                         </ul>
-                                        <br></br>
+                                        <br />
                                         <h5>Main Ingredients:</h5>
                                         <ul>
                                             {/* Ensure ingredients is properly handled */}
@@ -89,6 +89,9 @@ const RecipeList = () => {
                                                 <li key={index}>{ingredient}</li>
                                             ))}
                                         </ul>
+                                        <Link to={`/edit-recipe/${recipe.id}`} className="btn btn-primary mt-2">
+                                            Edit
+                                        </Link>
                                     </div>
                                 </li>
                             ))}

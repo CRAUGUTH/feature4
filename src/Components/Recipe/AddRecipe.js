@@ -58,7 +58,7 @@ const AddRecipe = () => {
                 <link href="styles.css" rel="stylesheet" />
             </head>
             <body>
-                <header className="text-center mb-4">
+                <header className="header-3 text-center mb-4">
                     <h1 className="mb-4">Create a New Recipe</h1>
                     {/* Internal Links */}
                     <nav>

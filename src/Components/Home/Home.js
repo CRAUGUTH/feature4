@@ -21,7 +21,7 @@ export default function Home({ currentUser }) {
         <link href="styles.css" rel="stylesheet" />
       </head>
       <body>
-        <header className="text-center mb-4">
+        <header className="header-1 text-center mb-4">
           <h1 className="mb-4">Welcome to Recipes!</h1>
           {/* Internal Links */}
           <nav>
