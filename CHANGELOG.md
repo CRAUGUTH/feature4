@@ -40,3 +40,9 @@ Added logout feature
 # Push 9 (Michael):
 
 Added live query
+
+# Push(s) 10-12 (Conner):
+
+- Added cal calculator
+- Added edit feature
+- Added allergen tags
