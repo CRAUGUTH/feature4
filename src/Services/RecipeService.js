@@ -17,7 +17,10 @@ export const fetchRecipes = async (user) => {
                 protein: result.get('protein'),
                 fat: result.get('fat'),
                 carbs: result.get('carbs'),
-                ingredients: result.get('Ingredients') || []
+                ingredients: result.get('Ingredients') || [],
+                milkAllergen: result.get('milkAllergen'),
+                eggAllergen: result.get('eggAllergen'),
+                nutAllergen: result.get('nutAllergen')
             }
         }));
     } catch (error) {
@@ -29,8 +32,6 @@ export const fetchRecipes = async (user) => {
 export const LiveRecipes = async (user) => {
     const Recipe = Parse.Object.extend('Recipe');
     const query = new Parse.Query(Recipe);
-
-    //query.equalTo('user', user);
 
     try {
         const results = await query.find();
@@ -52,7 +53,7 @@ export const LiveRecipes = async (user) => {
 };
 
 // Add a new recipe for the current user
-export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredients }) => {
+export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredients, milkAllergen, eggAllergen, nutAllergen }) => {
     const Recipe = Parse.Object.extend('Recipe');
     const recipe = new Recipe();
 
@@ -65,10 +66,13 @@ export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredien
     recipe.set('fat', parseFloat(fat));
     recipe.set('carbs', parseFloat(carbs));
     recipe.set('Ingredients', ingredients);
+    recipe.set('milkAllergen', milkAllergen);
+    recipe.set('eggAllergen', eggAllergen);
+    recipe.set('nutAllergen', nutAllergen);
 
     try {
         await recipe.save();
-        console.log('Recipe added:', { name, calories, protein, fat, carbs, ingredients });
+        console.log('Recipe added:', { name, calories, protein, fat, carbs, ingredients, milkAllergen, eggAllergen, nutAllergen });
     } catch (error) {
         console.error('Error adding recipe:', error);
         throw error;
@@ -76,7 +80,7 @@ export const addRecipe = async ({ name, calories, protein, fat, carbs, ingredien
 };
 
 // Update an existing recipe
-export const updateRecipe = async ({ id, name, calories, protein, fat, carbs, ingredients }) => {
+export const updateRecipe = async ({ id, name, calories, protein, fat, carbs, ingredients, milkAllergen, eggAllergen, nutAllergen }) => {
     const Recipe = Parse.Object.extend('Recipe');
     const query = new Parse.Query(Recipe);
 
@@ -88,9 +92,12 @@ export const updateRecipe = async ({ id, name, calories, protein, fat, carbs, in
         recipe.set('fat', parseFloat(fat));
         recipe.set('carbs', parseFloat(carbs));
         recipe.set('Ingredients', ingredients);
+        recipe.set('milkAllergen', milkAllergen);
+        recipe.set('eggAllergen', eggAllergen);
+        recipe.set('nutAllergen', nutAllergen);
 
         await recipe.save();
-        console.log('Recipe updated:', { id, name, calories, protein, fat, carbs, ingredients });
+        console.log('Recipe updated:', { id, name, calories, protein, fat, carbs, ingredients, milkAllergen, eggAllergen, nutAllergen });
     } catch (error) {
         console.error('Error updating recipe:', error);
         throw error;

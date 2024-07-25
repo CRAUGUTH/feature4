@@ -132,7 +132,7 @@ footer {
 }
 
 .items-searched{
-  padding: 10px 5px; /* Adjust padding as needed (top-bottom, left-right) */
+  padding: 10px 5px;
   display: inline-flex; 
   align-items: center; 
   font-size: 1.00rem;
@@ -140,12 +140,12 @@ footer {
 
 
 .recipe-list-container ul {
-  display: flex; /* Enables flexbox layout for the ul */
-  flex-flow: row wrap; /* Allows items to wrap onto new lines */
-  padding: 0; /* Removes default padding */
-  margin: 0; /* Removes default margin */
-  list-style: none; /* Removes default list bullets */
-  gap: 20px; /* Adds space between items */
+  display: flex; 
+  flex-flow: row wrap;
+  padding: 0; 
+  margin: 0;
+  list-style: none; 
+  gap: 20px; 
 }
 
 /* Flexbox for list items */

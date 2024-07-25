@@ -12,6 +12,12 @@ const calculateCalories = (protein, carbs, fat) => {
 // RecipeList Component
 const RecipeList = () => {
     const [recipes, setRecipes] = useState([]);
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
+    const [allergens, setAllergens] = useState({
+        milkAllergen: false,
+        eggAllergen: false,
+        nutAllergen: false,
+    });
 
     useLayoutEffect(() => {
         async function fetchUserRecipes() {
@@ -21,12 +27,24 @@ const RecipeList = () => {
                 
                 // Calculate calories for each recipe
                 const recipesWithCalories = fetchedRecipes.map(recipe => {
-                    const { protein, carbs, fat } = recipe.attributes;
+                    const { protein, carbs, fat, milkAllergen, eggAllergen, nutAllergen } = recipe.attributes;
                     const calories = calculateCalories(protein, carbs, fat);
-                    return { ...recipe, attributes: { ...recipe.attributes, calories } };
+                    // Include allergens in the attributes
+                    return {
+                        ...recipe,
+                        attributes: {
+                            ...recipe.attributes,
+                            calories,
+                            milkAllergen,
+                            eggAllergen,
+                            nutAllergen,
+                        }
+                    };
                 });
 
                 setRecipes(recipesWithCalories);
+                setFilteredRecipes(recipesWithCalories);
+
             } catch (error) {
                 console.error('Error fetching recipes:', error);
             }
@@ -35,10 +53,29 @@ const RecipeList = () => {
         fetchUserRecipes();
     }, []);
 
+    const handleAllergenChange = (e) => {
+        const { name, checked } = e.target;
+        setAllergens((prevAllergens) => ({
+            ...prevAllergens,
+            [name]: checked,
+        }));
+    };
+
+    const filterRecipes = () => {
+        setFilteredRecipes(
+            recipes.filter(recipe => {
+                const { milkAllergen, eggAllergen, nutAllergen } = allergens;
+                return (!milkAllergen || !recipe.attributes.milkAllergen) &&
+                       (!eggAllergen || !recipe.attributes.eggAllergen) &&
+                       (!nutAllergen || !recipe.attributes.nutAllergen);
+            })
+        );
+    };
+
     return (
         <html lang="en">
             <head>
-                <title>Saved Recipes</title>
+                <title>Recipe List</title>
                 {/* Include Bootstrap CSS */}
                 <link
                     href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -63,36 +100,70 @@ const RecipeList = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/liveList">Live Recipe List</Link>
-                            </li>                          
+                            </li>
                         </ul>
                     </nav>
                 </header>
                 <main className="container">
-                    {/* General Information */}
-                    {recipes.length > 0 ? (
+                    <div className="allergen-filter mb-4">
+                        <h3>Filter by Allergens</h3>
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="milkAllergen"
+                                name="milkAllergen"
+                                checked={allergens.milkAllergen}
+                                onChange={handleAllergenChange}
+                            />
+                            <label className="form-check-label" htmlFor="milkAllergen">Milk Allergen</label>
+                        </div>
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="eggAllergen"
+                                name="eggAllergen"
+                                checked={allergens.eggAllergen}
+                                onChange={handleAllergenChange}
+                            />
+                            <label className="form-check-label" htmlFor="eggAllergen">Egg Allergen</label>
+                        </div>
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="nutAllergen"
+                                name="nutAllergen"
+                                checked={allergens.nutAllergen}
+                                onChange={handleAllergenChange}
+                            />
+                            <label className="form-check-label" htmlFor="nutAllergen">Nut Allergen</label>
+                        </div>
+                        <button className="btn btn-primary mt-2" onClick={filterRecipes}>Apply Filter</button>
+                    </div>
+                    {/* Recipe List */}
+                    <h2>Recipe List</h2>
+                    {filteredRecipes.length > 0 ? (
                         <ul className="list-unstyled">
-                            {recipes.map((recipe) => (
-                                <li key={recipe.id} className="recipe-box">
-                                    <div>
-                                        <h3><b>{recipe.attributes.name}</b></h3>
-                                        <h4>Calories: {recipe.attributes.calories}</h4>
-                                        <ul>
-                                            <li>Protein: {recipe.attributes.protein}</li>
-                                            <li>Fat: {recipe.attributes.fat}</li>
-                                            <li>Carbs: {recipe.attributes.carbs}</li>
-                                        </ul>
-                                        <br />
-                                        <h5>Main Ingredients:</h5>
-                                        <ul>
-                                            {/* Ensure ingredients is properly handled */}
-                                            {recipe.attributes.ingredients.map((ingredient, index) => (
-                                                <li key={index}>{ingredient}</li>
-                                            ))}
-                                        </ul>
-                                        <Link to={`/edit-recipe/${recipe.id}`} className="btn btn-primary mt-2">
-                                            Edit
-                                        </Link>
-                                    </div>
+                            {filteredRecipes.map((recipe) => (
+                                <li key={recipe.id} className="recipe-box mb-3 p-3 border rounded">
+                                    <h3><b>{recipe.attributes.name}</b></h3>
+                                    <h4>Calories: {recipe.attributes.calories}</h4>
+                                    <ul>
+                                        <li>Protein: {recipe.attributes.protein}</li>
+                                        <li>Fat: {recipe.attributes.fat}</li>
+                                        <li>Carbs: {recipe.attributes.carbs}</li>
+                                    </ul>
+                                    <h5>Main Ingredients:</h5>
+                                    <ul>
+                                        {recipe.attributes.ingredients.map((ingredient, index) => (
+                                            <li key={index}>{ingredient}</li>
+                                        ))}
+                                    </ul>
+                                    <Link to={`/edit-recipe/${recipe.id}`} className="btn btn-primary mt-2">
+                                        Edit
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

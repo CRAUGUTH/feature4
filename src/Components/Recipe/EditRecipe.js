@@ -13,6 +13,9 @@ const EditRecipe = () => {
   const [fat, setFat] = useState('');
   const [carbs, setCarbs] = useState('');
   const [ingredients, setIngredients] = useState([]);
+  const [milkAllergen, setMilkAllergen] = useState(false);
+  const [eggAllergen, setEggAllergen] = useState(false);
+  const [nutAllergen, setNutAllergen] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -27,6 +30,9 @@ const EditRecipe = () => {
         setFat(recipe.get('fat'));
         setCarbs(recipe.get('carbs'));
         setIngredients(recipe.get('Ingredients') || []);
+        setMilkAllergen(recipe.get('milkAllergen') || false);
+        setEggAllergen(recipe.get('eggAllergen') || false);
+        setNutAllergen(recipe.get('nutAllergen') || false);
       } catch (error) {
         console.error('Error while fetching recipe', error);
       }
@@ -45,7 +51,10 @@ const EditRecipe = () => {
         protein, 
         fat, 
         carbs, 
-        ingredients 
+        ingredients, 
+        milkAllergen, 
+        eggAllergen, 
+        nutAllergen 
       });
       navigate('/list');
     } catch (error) {
@@ -178,6 +187,42 @@ const EditRecipe = () => {
                 </div>
               ))}
               <button type="button" onClick={handleAddIngredient} className="btn btn-primary mt-2">Add Ingredient</button>
+            </div>
+            <div className="form-group">
+              <label>Allergen Restrictions:</label>
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="milkAllergen"
+                  name="milkAllergen"
+                  checked={milkAllergen}
+                  onChange={(e) => setMilkAllergen(e.target.checked)}
+                />
+                <label className="form-check-label" htmlFor="milkAllergen">Milk Allergen</label>
+              </div>
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="eggAllergen"
+                  name="eggAllergen"
+                  checked={eggAllergen}
+                  onChange={(e) => setEggAllergen(e.target.checked)}
+                />
+                <label className="form-check-label" htmlFor="eggAllergen">Egg Allergen</label>
+              </div>
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="nutAllergen"
+                  name="nutAllergen"
+                  checked={nutAllergen}
+                  onChange={(e) => setNutAllergen(e.target.checked)}
+                />
+                <label className="form-check-label" htmlFor="nutAllergen">Nut Allergen</label>
+              </div>
             </div>
             <button type="submit" className="btn btn-primary mt-3">Update Recipe</button>
           </form>
